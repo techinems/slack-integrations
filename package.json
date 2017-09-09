@@ -1,0 +1,26 @@
+{
+  "name": "slack-responding",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rpiambulance/slack-responding.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rpiambulance/slack-responding/issues"
+  },
+  "homepage": "https://github.com/rpiambulance/slack-responding#readme",
+  "dependencies": {
+    "@slack/client": "^3.12.0",
+    "express-slack": "^1.0.11",
+    "request": "^2.81.0",
+    "slack-client": "^2.0.6"
+  }
+}
