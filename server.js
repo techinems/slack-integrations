@@ -87,7 +87,8 @@ app.post("/slack_response", function(req, res) {
        {
            "fallback": "That didn't work.",
             "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
-            "color": "#7CD197"
+            "color": "#7CD197",
+            "mrkdwn_in": ["text"]
        }
      ]
     }
@@ -101,7 +102,7 @@ app.post("/slack_response", function(req, res) {
       "attachments": [
        {
            "fallback": "That didn't work.",
-            "text": "*" + usernameUppercase + "*" + " is *RESPONDING*"
+            "text": usernameUppercase + " is NOT RESPONDING"
         }
      ]
     }
