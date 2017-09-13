@@ -22,7 +22,7 @@ var now = new Date();
 var pretty = [
   now.getFullYear(),
   '-',
-  now.getMonth() + 1,
+  now.getMonth() + 1 < 10 ? "0" + now.getMonth()+1 : now.getMonth() + 1,
   '-',
   now.getDate(),
   ' ',
@@ -34,7 +34,7 @@ var pretty = [
 ].join('');
 
 let message = {
-  unfurl_links: true,
+  unfurl_links: false,
   channel: 'C71B0PRDW',
   token: info.token,
   "text": "RPI Ambulance - call at " + pretty + "!",
