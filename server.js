@@ -64,13 +64,9 @@ let message = {
 };
 
 app.post('/tmd_slack_notification', function(req, res){
-  console.log(req.body);
-  var strReq = req.body.toString();
-  var strReq = JSON.parse(strReq);
-  console.log(strReq);
-  if (strReq.verification == info.verification_email) {
+  if (req.body.verification == info.verification_email) {
     slack.send('chat.postMessage', message);
-    res.status(200).send();
+    res.status(200).send(req.body.dispatch);
   }
   else{
     res.status(401).send();
