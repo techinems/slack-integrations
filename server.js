@@ -39,7 +39,7 @@ app.post('/tmd_slack_notification', function(req, res){
 
     var message = {
       unfurl_links: true,
-      channel: 'C71B0PRDW',
+      channel: 'G6XGMATUP',
       token: info.token,
       "attachments": [
         {
