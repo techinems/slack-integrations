@@ -32,39 +32,50 @@ var pretty = [
   now.getSeconds()
 ].join('');
 
-let message = {
-  unfurl_links: true,
-  channel: 'C71B0PRDW',
-  token: info.token,
-  "text": "RPI Ambulance - call on " + pretty + "!",
-  "attachments": [
-    {
-      "text": "Are you responding?",
-      "fallback": "No",
-      "callback_id": "responding",
-      "color": "#3AA3E3",
-      "attachment_type": "default",
-      "actions": [
-        {
-          "name": "status",
-          "text": "Yes",
-          "style": "danger",
-          "type": "button",
-          "value": "yes"
-        },
-        {
-          "name": "status",
-          "text": "No",
-          "type": "button",
-          "value": "no"
-        }
-      ]
-    }
-  ]
-};
+
 
 app.post('/tmd_slack_notification', function(req, res){
   if (req.body.verification == info.verification_email) {
+
+    var message = {
+      unfurl_links: true,
+      channel: 'C71B0PRDW',
+      token: info.token,
+      "attachments": [
+        {
+            "text": "RPI Ambulance Dispatched at " + pretty,
+            "fallback": "No",
+            "callback_id": "responding",
+            "color": "#F35A00",
+            "attachment_type": "default",
+			"fields": [
+                {
+                    "title": req.body.dispatch,
+                    "value": "Are you responding?",
+                    "short": true
+                }
+            ],
+            "actions": [
+                {
+                    "name": "status",
+                    "text": "Yes",
+                    "style": "danger",
+                    "type": "button",
+                    "value": "yes"
+                },
+                {
+                    "name": "status",
+                    "text": "No",
+                    "type": "button",
+                    "value": "no"
+                }
+            ]
+        }
+    ]
+    };
+
+
+
     slack.send('chat.postMessage', message);
     res.status(200).send(req.body.dispatch);
   }
