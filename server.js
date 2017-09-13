@@ -63,6 +63,16 @@ let message = {
   ]
 };
 
+app.post('/tmd_slack_notification', function(req, res){
+  if (req.body.payload.verification == info.verification_email) {
+    slack.send('chat.postMessage', message);
+    res.status(200).send();
+  }
+  else{
+    res.status(401).send();
+  }
+});
+
 slack.send('chat.postMessage', message);
 
 app.post("/slack_response", function(req, res) {
@@ -103,7 +113,7 @@ app.post("/slack_response", function(req, res) {
   }
 
   res.status(200).send();
-  
+
   slack.send('chat.postMessage', response_message);
 });
 
