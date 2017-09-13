@@ -77,18 +77,25 @@ app.post("/slack_response", function(req, res) {
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
-    var postThis = "*" + usernameUppercase + "*" + " is *RESPONDING*"
+    let response_message = {
+      unfurl_links: true,
+      channel: 'C71B0PRDW',
+      token: info.token,
+      "text": postThis,
+      "mrkdwn": true,
+      "attachments": [
+       {
+           "fallback": "That didn't work.",
+            "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
+            "color": "#7CD197"
+       }
+     ]
+    }
   } else {
     var postThis = usernameUppercase + " is NOT RESPONDING"
   }
 
-  let response_message = {
-    unfurl_links: true,
-    channel: 'C71B0PRDW',
-    token: info.token,
-    "text": postThis,
-    "mrkdwn": true
-  }
+
 
   res.status(200).send();
 
