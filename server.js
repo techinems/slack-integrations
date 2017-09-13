@@ -72,8 +72,8 @@ app.post("/slack_response", function(req, res) {
   var strReq= req.body.payload.toString();
   // console.log(strReq);
   var strReq = JSON.parse(strReq);
-  // console.log(strReq.user);
-  // console.log(strReq.actions[0].value);
+  console.log(strReq.user);
+  console.log(strReq.actions[0].value);
   if (strReq.actions[0].value == "yes") {
     var postThis = strReq.user.name + " is RESPONDING."
   } else{
