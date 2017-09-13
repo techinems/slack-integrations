@@ -68,13 +68,13 @@ let message = {
 slack.send('chat.postMessage', message);
 
 app.post("/slack_response", function(req, res) {
-  console.log(req.body.payload);
+  // console.log(req.body.payload);
   var strReq= req.body.payload.toString();
-  console.log(strReq);
+  // console.log(strReq);
   var strReq = JSON.parse(strReq);
-  console.log(strReq.user);
-  console.log(strReq.actions);
-  if (strReq.actions.value == "yes") {
+  // console.log(strReq.user);
+  // console.log(strReq.actions[0].value);
+  if (strReq.actions[0].value == "yes") {
     var postThis = strReq.user.name + " is RESPONDING."
   } else{
     var postThis = strReq.user.name + " is NOT RESPONDING."
