@@ -79,7 +79,7 @@ app.post("/slack_response", function(req, res) {
   } else{
     var postThis = strReq.user.name + " is NOT RESPONDING."
   }
-  res.status(200);
+  res.status(200).send();
 });
 
 app.listen(5939, function () {
