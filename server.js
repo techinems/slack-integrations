@@ -64,7 +64,7 @@ let message = {
 };
 
 app.post('/tmd_slack_notification', function(req, res){
-  console.log(req);
+  console.log(req.body);
   var strReq = req.body.toString();
   var strReq = JSON.parse(strReq);
   console.log(strReq);
