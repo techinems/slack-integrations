@@ -77,7 +77,7 @@ app.post("/slack_response", function(req, res) {
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
-    let response_message = {
+    var response_message = {
       unfurl_links: true,
       channel: 'C71B0PRDW',
       token: info.token,
@@ -92,7 +92,7 @@ app.post("/slack_response", function(req, res) {
      ]
     }
   } else {
-    var postThis = usernameUppercase + " is NOT RESPONDING"
+    var response_message = usernameUppercase + " is NOT RESPONDING"
   }
 
 
