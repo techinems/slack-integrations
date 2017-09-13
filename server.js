@@ -74,12 +74,15 @@ app.post("/slack_response", function(req, res) {
   var strReq = JSON.parse(strReq);
   console.log(strReq.user);
   console.log(strReq.actions[0].value);
+  usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
-    var postThis = strReq.user.name + " is RESPONDING."
+    var postThis = usernameUppercase + " is RESPONDING."
   } else{
-    var postThis = strReq.user.name + " is NOT RESPONDING."
+    var postThis = usernameUppercase + " is NOT RESPONDING."
   }
   res.status(200).send();
+
+  slack.send('chat.postMessage', postThis);
 });
 
 app.listen(5939, function () {
