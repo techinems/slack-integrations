@@ -22,7 +22,7 @@ var now = new Date();
 var pretty = [
   now.getFullYear(),
   '-',
-  now.getMonth() + 1 < 10 ? "0" + now.getMonth()+1 : now.getMonth() + 1,
+  now.getMonth() + 1 < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1),
   '-',
   now.getDate(),
   ' ',
@@ -34,7 +34,7 @@ var pretty = [
 ].join('');
 
 let message = {
-  unfurl_links: false,
+  unfurl_links: true,
   channel: 'C71B0PRDW',
   token: info.token,
   "text": "RPI Ambulance - call at " + pretty + "!",
@@ -79,7 +79,7 @@ app.post("/slack_response", function(req, res) {
   } else{
     var postThis = strReq.user.name + " is NOT RESPONDING."
   }
-  res.status(200).send(postThis);
+  res.status(200);
 });
 
 app.listen(5939, function () {
