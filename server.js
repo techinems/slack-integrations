@@ -93,7 +93,18 @@ app.post("/slack_response", function(req, res) {
     }
   } else {
     console.log("Was no");
-    var response_message = usernameUppercase + " is NOT RESPONDING"
+    var response_message = {
+      unfurl_links: true,
+      channel: 'C71B0PRDW',
+      token: info.token,
+      "mrkdwn": true,
+      "attachments": [
+       {
+           "fallback": "That didn't work.",
+            "text": "*" + usernameUppercase + "*" + " is *RESPONDING*"
+        }
+     ]
+    }
   }
 
 
