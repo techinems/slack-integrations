@@ -82,7 +82,6 @@ app.post("/slack_response", function(req, res) {
       unfurl_links: true,
       channel: 'C71B0PRDW',
       token: info.token,
-      "text": postThis,
       "mrkdwn": true,
       "attachments": [
        {
