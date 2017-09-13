@@ -43,7 +43,7 @@ app.post('/tmd_slack_notification', function(req, res){
       token: info.token,
       "attachments": [
         {
-            "text": "RPI Ambulance Dispatched at " + pretty,
+            "text": "RPI Ambulance dispatched at " + pretty,
             "fallback": "No",
             "callback_id": "responding",
             "color": "#F35A00",
@@ -93,7 +93,7 @@ app.post("/slack_response", function(req, res) {
     console.log("Was yes");
     var response_message = {
       unfurl_links: true,
-      channel: 'C71B0PRDW',
+      channel: 'G6XGMATUP',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
