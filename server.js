@@ -57,7 +57,7 @@ let message = {
           "name": "status",
           "text": "No",
           "type": "button",
-          "value": "maze"
+          "value": "no"
         }
       ]
     }
@@ -73,8 +73,13 @@ app.post("/slack_response", function(req, res) {
   console.log(strReq);
   var strReq = JSON.parse(strReq);
   console.log(strReq.user);
-  // var postThis = strReq.user.name + "has marked himself as " + 
-  res.status(200).send("Your status has been received and logged. Thanks!");
+  console.log(strReq.actions);
+  if (strReq.actions.value == "yes") {
+    var postThis = strReq.user.name + " is RESPONDING."
+  } else{
+    var postThis = strReq.user.name + " is NOT RESPONDING."
+  }
+  res.status(200).send(postThis);
 });
 
 app.listen(5939, function () {
