@@ -64,7 +64,10 @@ let message = {
 };
 
 app.post('/tmd_slack_notification', function(req, res){
-  if (req.body.payload.verification == info.verification_email) {
+  var strReq = req.body.payload.toString();
+  var strReq = JSON.parse(strReq);
+  console.log(strReq);
+  if (strReq.verification == info.verification_email) {
     slack.send('chat.postMessage', message);
     res.status(200).send();
   }
@@ -74,7 +77,7 @@ app.post('/tmd_slack_notification', function(req, res){
 });
 
 app.post("/slack_response", function(req, res) {
-  var strReq= req.body.payload.toString();
+  var strReq = req.body.payload.toString();
   var strReq = JSON.parse(strReq);
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
