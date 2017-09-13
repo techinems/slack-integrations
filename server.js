@@ -9,7 +9,6 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// the path for OAuth, slash commands, and event callbacks
 app.use('/slack', slack({
   scope: info.scope,
   token: info.token,
@@ -64,16 +63,11 @@ let message = {
   ]
 };
 
-// send message to any Slack endpoint
 slack.send('chat.postMessage', message);
 
 app.post("/slack_response", function(req, res) {
-  // console.log(req.body.payload);
   var strReq= req.body.payload.toString();
-  // console.log(strReq);
   var strReq = JSON.parse(strReq);
-  console.log(strReq.user);
-  console.log(strReq.actions[0].value);
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
@@ -108,10 +102,8 @@ app.post("/slack_response", function(req, res) {
     }
   }
 
-
-
   res.status(200).send();
-
+  
   slack.send('chat.postMessage', response_message);
 });
 
