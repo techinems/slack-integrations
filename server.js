@@ -73,8 +73,6 @@ app.post('/tmd_slack_notification', function(req, res){
   }
 });
 
-slack.send('chat.postMessage', message);
-
 app.post("/slack_response", function(req, res) {
   var strReq= req.body.payload.toString();
   var strReq = JSON.parse(strReq);
