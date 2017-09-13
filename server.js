@@ -79,7 +79,7 @@ app.post("/slack_response", function(req, res) {
   if (strReq.actions[0].value == "yes") {
     var postThis = "*" + usernameUppercase + "*" + " is *RESPONDING*"
   } else {
-    var postThis = "*" + usernameUppercase + "*" + " is *NOT RESPONDING*"
+    var postThis = usernameUppercase + " is NOT RESPONDING"
   }
 
   let response_message = {
