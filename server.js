@@ -25,7 +25,7 @@ var pretty = [
   now.getMonth() + 1 < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1),
   '-',
   now.getDate(),
-  ' ',
+  ' at ',
   now.getHours(),
   ':',
   now.getMinutes(),
@@ -37,7 +37,7 @@ let message = {
   unfurl_links: true,
   channel: 'C71B0PRDW',
   token: info.token,
-  "text": "RPI Ambulance - call at " + pretty + "!",
+  "text": "RPI Ambulance - call on " + pretty + "!",
   "attachments": [
     {
       "text": "Are you responding?",
@@ -77,16 +77,17 @@ app.post("/slack_response", function(req, res) {
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
-    var postThis = usernameUppercase + " is RESPONDING"
+    var postThis = "*" + usernameUppercase + "*" + " is *RESPONDING*"
   } else {
-    var postThis = usernameUppercase + " is NOT RESPONDING"
+    var postThis = "*" + usernameUppercase + "*" + " is *NOT RESPONDING*"
   }
 
   let response_message = {
     unfurl_links: true,
     channel: 'C71B0PRDW',
     token: info.token,
-    "text": postThis
+    "text": postThis,
+    "mrkdwn": true
   }
 
   res.status(200).send();
