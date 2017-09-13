@@ -35,8 +35,6 @@ var pretty = [
 
 
 app.post('/tmd_slack_notification', function(req, res){
-  console.log(req.body.verification);
-  console.log(info.verification_email);
   if (req.body.verification == info.verification_email) {
 
     var message = {
