@@ -5,8 +5,8 @@ This project provides [IamResponding](https://iamresponding.com/v3/Pages/Default
 This interactive message posts some information about the call and queries channel members if they're responding or not. It the posts for the channel to see each person's status.
 
 Here's how a dispatch looks in Slack—with a few people who responded to the call:
+<img src="https://i.imgur.com/qAL5Szl.pnghttps://i.imgur.com/qAL5Szl.png" width="400">
 
-![Example of AIR dispatch](https://i.imgur.com/qAL5Szl.png)
 
 ---
 
