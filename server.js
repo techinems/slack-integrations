@@ -27,11 +27,11 @@ app.post('/tmd_slack_notification', function(req, res){
     '-',
     now.getDate(),
     ' at ',
-    now.getHours() + 1 < 10 ? "0" + (now.getHours() + 1) : (now.getHours()),
+    now.getHours() + 1 < 10 ? "0" + (now.getHours()) : (now.getHours()),
     ':',
-    now.getMinutes() + 1 < 10 ? "0" + (now.getMinutes() + 1) : (now.getMinutes()),
+    now.getMinutes() + 1 < 10 ? "0" + (now.getMinutes()) : (now.getMinutes()),
     ':',
-    now.getSeconds() + 1 < 10 ? "0" + (now.getSeconds() + 1) : (now.getSeconds())
+    now.getSeconds() + 1 < 10 ? "0" + (now.getSeconds()) : (now.getSeconds())
   ].join('');
 
   if (req.body.verification == info.verification_email) {
