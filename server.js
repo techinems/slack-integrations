@@ -19,7 +19,7 @@ app.use('/slack', slack({
 
 app.post('/whoson', function(req, res) {
   console.log(req);
-}
+});
 
 app.post('/tmd_slack_notification', function(req, res) {
 
