@@ -17,24 +17,23 @@ app.use('/slack', slack({
   client_secret: info.client_secret
 }));
 
-var now = new Date();
-var pretty = [
-  now.getFullYear(),
-  '-',
-  now.getMonth() + 1 < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1),
-  '-',
-  now.getDate(),
-  ' at ',
-  now.getHours() + 1 < 10 ? "0" + (now.getHours() + 1) : (now.getHours() + 1),
-  ':',
-  now.getMinutes() + 1 < 10 ? "0" + (now.getMinutes() + 1) : (now.getMinutes() + 1),
-  ':',
-  now.getSeconds() + 1 < 10 ? "0" + (now.getSeconds() + 1) : (now.getSeconds() + 1)
-].join('');
-
-
-
 app.post('/tmd_slack_notification', function(req, res){
+
+  var now = new Date();
+  var pretty = [
+    now.getFullYear(),
+    '-',
+    now.getMonth() + 1 < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1),
+    '-',
+    now.getDate(),
+    ' at ',
+    now.getHours() + 1 < 10 ? "0" + (now.getHours() + 1) : (now.getHours() + 1),
+    ':',
+    now.getMinutes() + 1 < 10 ? "0" + (now.getMinutes() + 1) : (now.getMinutes() + 1),
+    ':',
+    now.getSeconds() + 1 < 10 ? "0" + (now.getSeconds() + 1) : (now.getSeconds() + 1)
+  ].join('');
+
   if (req.body.verification == info.verification_email) {
 
     var message = {
@@ -43,35 +42,35 @@ app.post('/tmd_slack_notification', function(req, res){
       token: info.token,
       "attachments": [
         {
-            "text": "RPI Ambulance dispatched at " + pretty,
-            "fallback": req.body.dispatch,
-            "callback_id": "responding",
-            "color": "#F35A00",
-            "attachment_type": "default",
-			"fields": [
-                {
-                    "title": req.body.dispatch,
-                    "value": "Are you responding?",
-                    "short": true
-                }
-            ],
-            "actions": [
-                {
-                    "name": "status",
-                    "text": "Yes",
-                    "style": "danger",
-                    "type": "button",
-                    "value": "yes"
-                },
-                {
-                    "name": "status",
-                    "text": "No",
-                    "type": "button",
-                    "value": "no"
-                }
-            ]
+          "text": "RPI Ambulance dispatched at " + pretty,
+          "fallback": req.body.dispatch,
+          "callback_id": "responding",
+          "color": "#F35A00",
+          "attachment_type": "default",
+          "fields": [
+            {
+              "title": req.body.dispatch,
+              "value": "Are you responding?",
+              "short": true
+            }
+          ],
+          "actions": [
+            {
+              "name": "status",
+              "text": "Yes",
+              "style": "danger",
+              "type": "button",
+              "value": "yes"
+            },
+            {
+              "name": "status",
+              "text": "No",
+              "type": "button",
+              "value": "no"
+            }
+          ]
         }
-    ]
+      ]
     };
 
 
@@ -97,13 +96,13 @@ app.post("/slack_response", function(req, res) {
       token: info.token,
       "mrkdwn": true,
       "attachments": [
-       {
-           "fallback": "That didn't work.",
-            "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
-            "color": "#7CD197",
-            "mrkdwn_in": ["text"]
-       }
-     ]
+        {
+          "fallback": "That didn't work.",
+          "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
+          "color": "#7CD197",
+          "mrkdwn_in": ["text"]
+        }
+      ]
     }
   } else {
     console.log("Was no");
@@ -113,11 +112,11 @@ app.post("/slack_response", function(req, res) {
       token: info.token,
       "mrkdwn": true,
       "attachments": [
-       {
-           "fallback": "That didn't work.",
-            "text": usernameUppercase + " is NOT RESPONDING"
+        {
+          "fallback": "That didn't work.",
+          "text": usernameUppercase + " is NOT RESPONDING"
         }
-     ]
+      ]
     }
   }
 
