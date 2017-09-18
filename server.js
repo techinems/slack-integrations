@@ -18,7 +18,9 @@ app.use('/slack', slack({
 }));
 
 app.post('/whoson', function(req, res) {
-  console.log(req);
+  request("https://rpiambulance.com/slack-whoson.php?token=" + slash_command_token, function(error, response, body) {
+    res.status(200).body(body);
+  });
 });
 
 app.post('/tmd_slack_notification', function(req, res) {
