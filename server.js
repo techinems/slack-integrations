@@ -89,7 +89,7 @@ app.post("/slack_response", function(req, res) {
 
   usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
   if (strReq.actions[0].value == "yes") {
-    console.log("Was yes");
+    console.log(usernameUppercase + " replied yes");
     var response_message = {
       unfurl_links: true,
       channel: 'C71B0PRDW',
@@ -97,7 +97,7 @@ app.post("/slack_response", function(req, res) {
       "mrkdwn": true,
       "attachments": [
         {
-          "fallback": usernameUppercase + "is RESPONDING.",
+          "fallback": usernameUppercase + " is RESPONDING",
           "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
           "color": "#7CD197",
           "mrkdwn_in": ["text"]
@@ -105,7 +105,7 @@ app.post("/slack_response", function(req, res) {
       ]
     }
   } else {
-    console.log("Was no");
+    console.log(usernameUppercase + " replied no");
     var response_message = {
       unfurl_links: true,
       channel: 'C71B0PRDW',
@@ -113,7 +113,7 @@ app.post("/slack_response", function(req, res) {
       "mrkdwn": true,
       "attachments": [
         {
-          "fallback": usernameUppercase + "is not responding.",
+          "fallback": usernameUppercase + " is not responding",
           "text": usernameUppercase + " is NOT RESPONDING"
         }
       ]
