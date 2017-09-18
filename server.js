@@ -17,7 +17,11 @@ app.use('/slack', slack({
   client_secret: info.client_secret
 }));
 
-app.post('/tmd_slack_notification', function(req, res){
+app.post('/whoson', function(req, res) {
+  console.log(req);
+}
+
+app.post('/tmd_slack_notification', function(req, res) {
 
   var now = new Date();
   var pretty = [
