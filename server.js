@@ -38,7 +38,7 @@ app.post('/tmd_slack_notification', function(req, res){
 
     var message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "attachments": [
         {
@@ -92,7 +92,7 @@ app.post("/slack_response", function(req, res) {
     console.log("Was yes");
     var response_message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
@@ -108,7 +108,7 @@ app.post("/slack_response", function(req, res) {
     console.log("Was no");
     var response_message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
