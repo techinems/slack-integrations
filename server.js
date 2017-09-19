@@ -140,8 +140,31 @@ app.use(express.static('.'));
 
 function rpialert() {
   request("https://ddbruce.com/test/alert.xml", function(error, response, body) {
-    console.log(body);
+    var json = JSON.parse(parser.toJson(body));
+
+    if (json.rss.channel.item) {
+      item = json.rss.channel.item;
+      title = item.title;
+      text = item.description
+      link = item.link
+
+      var message =  {
+        unfurl_links: false,
+        channel: 'C71B0PRDW',
+        token: info.token,
+        "text": "<!channel>",
+        "attachments": [
+          {
+            "title": title,
+            "text": text + "\nGet more info at " + link,
+            "color": "#f00"
+          }
+        ]
+      }
+
+      slack.send('chat.postMessage', response_message);
+    }
   });
 }
 
-rpialert();
+rpialert(rpialert(), 5000);
