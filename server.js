@@ -170,7 +170,7 @@ function rpialert() {
         oldtext = text;
       }
 
-      slack.send('chat.postMessage', response_message);
+      slack.send('chat.postMessage', message);
     }
   });
 }
