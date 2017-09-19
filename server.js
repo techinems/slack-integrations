@@ -4,7 +4,6 @@ var http = require('http')
 var info = require('./var.js');
 var request = require('request')
 var slack = require('express-slack');
-var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
