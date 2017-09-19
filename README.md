@@ -7,8 +7,8 @@ This integration was the origin on this entire project. AIR [IamResponding](http
 
 This interactive message posts some information about the call and queries channel members if they're responding or not. It the posts for the channel to see each person's status.
 
-Here's how a dispatch looks in Slack—with a few people who responded to the call:
-<img src="https://i.imgur.com/qAL5Szl.pnghttps://i.imgur.com/qAL5Szl.png" width="400">
+Here's how a dispatch looks in Slack—with a few people who responded to the call:  
+<img src="https://i.imgur.com/qAL5Szl.png" width="500">
 
 ---
 
@@ -26,6 +26,9 @@ ___
 The RPI*Alert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems have been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilize RPI*Alert*'s public RSS feed.
 
 This Slack integration uses the RSS feed, as well, and forwards the alert to everybody on the #alerts channel, a specific channel intended to never be muted.
+
+For good measure, here's how an alert looks in the channel:  
+<img src="https://i.imgur.com/9PKjtbU.png" width="500">
 
 
 ---
