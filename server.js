@@ -175,4 +175,4 @@ function rpialert() {
   });
 }
 
-setInterval(rpialert(), 10000);
+setInterval(function() {rpialert()}, 10000);
