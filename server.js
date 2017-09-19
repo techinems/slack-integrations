@@ -142,7 +142,7 @@ text = "";
 oldtext = "";
 
 function rpialert() {
-  request("https://ddbruce.com/test/alert.xml", function(error, response, body) {
+  request("http://alert.rpi.edu/data/alert/alerts.xml", function(error, response, body) {
     var json = JSON.parse(parser.toJson(body));
 
     if (json.rss.channel.item) {
@@ -154,7 +154,7 @@ function rpialert() {
       if (oldtext != text) {
         var message =  {
           unfurl_links: false,
-          channel: 'C71B0PRDW',
+          channel: 'C6WT63HM3',
           token: info.token,
           "text": "RPI ALERT - <!channel>",
           "fallback": "RPI ALERT: " + text,
