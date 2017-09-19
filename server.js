@@ -4,6 +4,7 @@ var http = require('http')
 var info = require('./var.js');
 var request = require('request')
 var slack = require('express-slack');
+var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,7 +45,7 @@ app.post('/tmd_slack_notification', function(req, res) {
 
     var message = {
       unfurl_links: true,
-      channel: 'C71B0PRDW',
+      channel: 'G6XGMATUP',
       token: info.token,
       "attachments": [
         {
@@ -98,7 +99,7 @@ app.post("/slack_response", function(req, res) {
     console.log(usernameUppercase + " replied yes");
     var response_message = {
       unfurl_links: true,
-      channel: 'C71B0PRDW',
+      channel: 'G6XGMATUP',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
@@ -114,7 +115,7 @@ app.post("/slack_response", function(req, res) {
     console.log(usernameUppercase + " replied no");
     var response_message = {
       unfurl_links: true,
-      channel: 'C71B0PRDW',
+      channel: 'G6XGMATUP',
       token: info.token,
       "mrkdwn": true,
       "attachments": [

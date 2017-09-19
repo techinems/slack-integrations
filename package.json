@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rpiambulance/slack-responding#readme",
   "dependencies": {
     "express-slack": "^1.0.11",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "xml2js": "^0.4.19"
   }
 }
