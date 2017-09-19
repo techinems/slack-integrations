@@ -145,16 +145,11 @@ function rpialert() {
   request("https://ddbruce.com/test/alert.xml", function(error, response, body) {
     var json = JSON.parse(parser.toJson(body));
 
-    console.log(json.rss.channel);
-
     if (json.rss.channel.item) {
       var item = json.rss.channel.item;
       var title = item.title;
       text = item.description
       var link = item.link
-
-      console.log("oldtext: " + oldtext);
-      console.log("text: " + text);
 
       if (oldtext != text) {
         var message =  {
@@ -180,4 +175,4 @@ function rpialert() {
   });
 }
 
-rpialert(rpialert(), 10000);
+setInterval(rpialert(), 10000);
