@@ -145,7 +145,7 @@ function rpialert() {
   request("https://ddbruce.com/test/alert.xml", function(error, response, body) {
     var json = JSON.parse(parser.toJson(body));
 
-    console.log(json);
+    console.log(json.rss.channel);
 
     if (json.rss.channel.item) {
       var item = json.rss.channel.item;
@@ -161,6 +161,7 @@ function rpialert() {
           "text": "<!channel>",
           "attachments": [
             {
+              "fallback": "RPI ALERT: " + text,
               "title": title,
               "text": text + "\nGet more info at " + link,
               "color": "#f00"
@@ -175,4 +176,4 @@ function rpialert() {
   });
 }
 
-rpialert(rpialert(), 5000);
+rpialert(rpialert(), 10000);
