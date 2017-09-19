@@ -18,12 +18,12 @@ This integration provides the RPI Ambulance crew schedule for:
 * The previous night's crew and tonight's crew, between 0600 and 0900 hours
 * Tonight's crew, between 0900 and 1800 hours
 
-These differences provide a logical and grammatically accurate description of the status of night crews. The time between 0600 and 0900 hours was specifically selected because that crew will often still respond to emergency calls—even after their "shift" ended.
+These differences provide a logical and grammatically accurate description of the status of night crews. The time between 0600 and 0900 hours was specifically selected because the previous night's crew will often still respond to emergency calls—even after their "shift" ended.
 
 ___
 
 ## RPI*Alert*
-The RPI*ALert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems have been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilize RPI*Alert*'s public RSS feed.
+The RPI*Alert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems have been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilize RPI*Alert*'s public RSS feed.
 
 This Slack integration uses the RSS feed, as well, and forwards the alert to everybody on the #alerts channel, a specific channel intended to never be muted.
 
@@ -37,4 +37,4 @@ This Slack integration uses the RSS feed, as well, and forwards the alert to eve
 * [David Sparkman](http://github.com/David-Sparky)
 
 #### License
-RPIA's Slack integrations are licensed under the MIT license.
+RPI Ambulance's Slack integrations are provided under the [MIT license](https://opensource.org/licenses/MIT).
