@@ -153,12 +153,16 @@ function rpialert() {
       text = item.description
       var link = item.link
 
+      console.log("oldtext: " + oldtext);
+      console.log("text: " + newtext);
+
       if (oldtext != text) {
         var message =  {
           unfurl_links: false,
           channel: 'C71B0PRDW',
           token: info.token,
-          "text": "<!channel>",
+          "text": "RPI ALERT - <!channel>",
+          "fallback": "RPI ALERT: " + text,
           "attachments": [
             {
               "fallback": "RPI ALERT: " + text,
