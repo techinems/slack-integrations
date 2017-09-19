@@ -154,7 +154,7 @@ function rpialert() {
       var link = item.link
 
       console.log("oldtext: " + oldtext);
-      console.log("text: " + newtext);
+      console.log("text: " + text);
 
       if (oldtext != text) {
         var message =  {
