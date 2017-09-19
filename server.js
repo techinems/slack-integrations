@@ -4,6 +4,7 @@ var http = require('http')
 var info = require('./var.js');
 var request = require('request')
 var slack = require('express-slack');
+var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -136,3 +137,11 @@ app.listen(5939, function () {
 });
 
 app.use(express.static('.'));
+
+function rpialert() {
+  request("https://ddbruce.com/test/alert.xml", function(error, response, body) {
+    console.log(body);
+  });
+}
+
+rpialert();
