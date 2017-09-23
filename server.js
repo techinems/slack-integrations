@@ -35,7 +35,7 @@ function makeDate(clean = false) {
       now.getHours() < 10 ? "0" + (now.getHours()) : (now.getHours()),
       now.getMinutes() < 10 ? "0" + (now.getMinutes()) : (now.getMinutes()),
       now.getSeconds() < 10 ? "0" + (now.getSeconds()) : (now.getSeconds())
-    }.join('');
+    ].join('');
   } else {
     return [
       now.getFullYear(),
