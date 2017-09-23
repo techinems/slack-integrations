@@ -59,7 +59,7 @@ app.post('/tmd_slack_notification', function(req, res) {
 
     var message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "attachments": [
         {
@@ -109,6 +109,8 @@ app.post("/slack_response", function(req, res) {
   var strReq = JSON.parse(strReq);
   var strReqarr = strReq.actions[0].value.split("_");
 
+  console.log(strReq);
+
   var responding = strReqarr[0];
   var ts = strReqarr[1];
 
@@ -117,7 +119,7 @@ app.post("/slack_response", function(req, res) {
     console.log(usernameUppercase + " replied yes");
     var response_message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
@@ -133,7 +135,7 @@ app.post("/slack_response", function(req, res) {
     console.log(usernameUppercase + " replied no");
     var response_message = {
       unfurl_links: true,
-      channel: 'G6XGMATUP',
+      channel: 'C71B0PRDW',
       token: info.token,
       "mrkdwn": true,
       "attachments": [
