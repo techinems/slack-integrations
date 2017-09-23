@@ -24,7 +24,7 @@ app.post('/whoson', function(req, res) {
   });
 });
 
-function makeDate(var clean = false) {
+function makeDate(clean = false) {
   var now = new Date();
 
   if (clean) {
