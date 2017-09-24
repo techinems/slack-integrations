@@ -100,15 +100,14 @@ app.post("/slack_response", function(req, res) {
   var strReq = JSON.parse(strReq);
 
   var maxElapsedTime = 12; //minutes to allow responses
+  maxElapsedTime *= 60 * 1000
 
-  var messageTime = new Date(strReq.message_ts);
-  var actionTime = new Date(strReq.action_ts);
+  var messageTime = new Date(strReq.message_ts * 1000);
+  var actionTime = new Date(strReq.action_ts * 1000);
 
-  console.log("Time difference: " + actionTime - messageTime);
-
-  if (actionTime - messageTime > maxElapsedTime) {
+  if ((actionTime - messageTime) < maxElapsedTime) {
     usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
-    if (responding == "yes") {
+    if (strReq.actions[0].value == "yes") {
       console.log(usernameUppercase + " replied yes");
       var response_message = {
         unfurl_links: true,
