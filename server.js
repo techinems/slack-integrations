@@ -7,7 +7,7 @@ var slack = require('express-slack');
 var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
-var slack_channel = 'C71B0PRDW';
+var slack_channel = 'G6XGMATUP';
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
