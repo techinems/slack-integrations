@@ -103,8 +103,7 @@ app.post("/slack_response", function(req, res) {
   var actionTime = new Date(strReq.action_ts);
   var maxElapsedTime = 12; //minutes to allow responses
 
-  // if (actionTime < messageTime + maxElapsedTime * 60) {
-  if (false) {
+  if (actionTime < messageTime + maxElapsedTime * 60) {
     usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
     if (responding == "yes") {
       console.log(usernameUppercase + " replied yes");
@@ -145,7 +144,7 @@ app.post("/slack_response", function(req, res) {
       token: info.token,
       user: strReq.user.id,
       as_user: true,
-      text: "Sorry, your response was logged too long after the initial dispatch went out."
+      text: "Sorry, your response was logged too long after the dispatch went out."
     }
     res.status(200).send();
     slack.send('chat.postEphemeral', response_message)
