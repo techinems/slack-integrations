@@ -99,11 +99,12 @@ app.post("/slack_response", function(req, res) {
   var strReq = req.body.payload.toString();
   var strReq = JSON.parse(strReq);
 
-  var messageTime = new Date(strReq.message_ts);
-  var actionTime = new Date(strReq.action_ts);
   var maxElapsedTime = 12; //minutes to allow responses
 
-  if (actionTime < messageTime + maxElapsedTime * 60) {
+  var latestTime = new Date(strReq.message_ts + maxElapsedTime * 60);
+  var actionTime = new Date(strReq.action_ts);
+
+  if (actionTime < latestTime) {
     usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
     if (responding == "yes") {
       console.log(usernameUppercase + " replied yes");
