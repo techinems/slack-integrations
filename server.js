@@ -144,7 +144,8 @@ app.post("/slack_response", function(req, res) {
       unfurl_links: true,
       channel: slack_channel,
       token: info.token,
-      "text": "Sorry, your response was logged too long after the initial dispatch went out."
+      as_user: true,
+      text: "Sorry, your response was logged too long after the initial dispatch went out."
     }
     res.status(200).send();
     slack.send('chat.postEphemeral', response_message)
