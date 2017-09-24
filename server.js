@@ -34,7 +34,7 @@ function makeDate() {
     '-',
     now.getMonth() + 1 < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1),
     '-',
-    now.getDate() + 1 < 10 ? "0" + (now.getDate() + 1) : (now.getDate() + 1),
+    now.getDate() < 10 ? "0" + (now.getDate()) : (now.getDate()),
     ' at ',
     now.getHours() < 10 ? "0" + (now.getHours()) : (now.getHours()),
     ':',
