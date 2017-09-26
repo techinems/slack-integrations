@@ -7,7 +7,8 @@ var slack = require('express-slack');
 var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
-var slack_channel = 'G6XGMATUP';
+// var slack_channel = 'C71B0PRDW'; //#development_scratch
+var slack_channel = 'G6XGMATUP'; //#responding
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -106,45 +107,55 @@ app.post("/slack_response", function(req, res) {
   var actionTime = new Date(strReq.action_ts * 1000);
 
   if ((actionTime - messageTime) < maxElapsedTime) {
-    usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
-    if (strReq.actions[0].value == "yes") {
-      console.log(usernameUppercase + " replied yes");
-      var response_message = {
-        unfurl_links: true,
-        channel: slack_channel,
-        token: info.token,
-        "mrkdwn": true,
-        "attachments": [
-          {
-            "fallback": usernameUppercase + " is RESPONDING",
-            "text": "*" + usernameUppercase + "*" + " is *RESPONDING*",
-            "color": "#7CD197",
-            "mrkdwn_in": ["text"]
-          }
-        ]
+    userID = strReq.user.id;
+
+    request.post({url:'https://slack.com/api/users.info', form: {token:info.token,user:userID}}, function(error, response, body){
+      var userinfo = response.body.toString();
+      var userinfo = JSON.parse(userinfo);
+
+      abbrname = userinfo.user.profile.first_name.charAt(0).toUpperCase() + ". " + userinfo.user.profile.last_name;
+
+      var usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
+      if (strReq.actions[0].value == "yes") {
+        console.log(abbrname + " replied yes");
+        var response_message = {
+          unfurl_links: true,
+          channel: slack_channel,
+          token: info.token,
+          "mrkdwn": true,
+          "attachments": [
+            {
+              "fallback": abbrname + " is RESPONDING",
+              "text": "*" + abbrname + "*" + " is *RESPONDING*",
+              "color": "#7CD197",
+              "mrkdwn_in": ["text"]
+            }
+          ]
+        }
+      } else {
+        console.log(abbrname + " replied no");
+        var response_message = {
+          unfurl_links: true,
+          channel: slack_channel,
+          token: info.token,
+          "mrkdwn": true,
+          "attachments": [
+            {
+              "fallback": abbrname + " is not responding",
+              "text": abbrname + " is NOT RESPONDING"
+            }
+          ]
+        }
       }
-    } else {
-      console.log(usernameUppercase + " replied no");
-      var response_message = {
-        unfurl_links: true,
-        channel: slack_channel,
-        token: info.token,
-        "mrkdwn": true,
-        "attachments": [
-          {
-            "fallback": usernameUppercase + " is not responding",
-            "text": usernameUppercase + " is NOT RESPONDING"
-          }
-        ]
-      }
-    }
-    res.status(200).send();
-    slack.send('chat.postMessage', response_message);
+      res.status(200).send();
+      slack.send('chat.postMessage', response_message);
+    });
+
   } else {
     var response_message = {
       channel: slack_channel,
       token: info.token,
-      user: strReq.user.id,
+      user: userID,
       as_user: true,
       text: "Sorry, your response was logged too long after the dispatch went out."
     }
