@@ -1,0 +1,8 @@
+module.exports = {
+  token: "XOXB_SLACK-TOKEN-HERE",
+  scope: "channels:write,chat:write,post,users.profile:read",
+  client_id: "CLIENT-ID-HERE",
+  client_secret: "CLIENT-SECRET-HERE",
+  verification_email: "BEING-USED-FOR-OTHER-THINGS",
+  slash_command_token: "SLASH_COMMAND_TOKEN"
+}
