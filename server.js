@@ -28,8 +28,15 @@ app.post('/whoson', function(req, res) {
   });
 });
 
-function get_hours(time_string) {
-    return new Date("2000-01-01 " + time_string).getHours() // 22
+function timenow(){
+    var now= new Date(),
+    h= now.getHours(),
+    m= now.getMinutes(),
+    s= now.getSeconds();
+
+    if(m<10) m= '0'+m;
+    if(s<10) s= '0'+s;
+    return h + ':' + m + ':' + s;
 }
 
 function makeDate() {
@@ -53,7 +60,7 @@ app.post('/tmd_slack_notification', function(req, res) {
 
   if (req.body.verification == info.verification_email) {
 
-    if(get_hours() > 5 && get_hours() < 17 ){
+    if(timenow() > '05:55:00' && timenow() < '18:05:00'){
 
     var message = {
       unfurl_links: true,
