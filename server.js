@@ -28,6 +28,10 @@ app.post('/whoson', function(req, res) {
   });
 });
 
+function get_hours(time_string) {
+    return new Date("2000-01-01 " + time_string).getHours() // 22
+}
+
 function makeDate() {
   var now = new Date();
   return [
@@ -48,6 +52,8 @@ function makeDate() {
 app.post('/tmd_slack_notification', function(req, res) {
 
   if (req.body.verification == info.verification_email) {
+
+    if(get_hours() > 5 && get_hours() < 17 ){
 
     var message = {
       unfurl_links: true,
@@ -85,7 +91,33 @@ app.post('/tmd_slack_notification', function(req, res) {
         }
       ]
     };
+  }
 
+  else{
+
+    var message = {
+      unfurl_links: true,
+      channel: slack_channel,
+      token: info.token,
+      "attachments": [
+        {
+          "text": "RPI Ambulance dispatched at " + makeDate(),
+          "fallback": req.body.dispatch,
+          "callback_id": "responding",
+          "color": "#F35A00",
+          "attachment_type": "default",
+          "fields": [
+            {
+              "title": req.body.dispatch,
+              "value": "Night crew call. No response in needed.",
+              "short": true
+            }
+          ]
+        }
+      ]
+    };
+
+  }
 
 
     slack.send('chat.postMessage', message);
