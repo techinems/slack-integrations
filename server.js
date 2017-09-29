@@ -28,15 +28,18 @@ app.post('/whoson', function(req, res) {
   });
 });
 
-function timenow(){
-    var now= new Date(),
-    h= now.getHours(),
-    m= now.getMinutes(),
-    s= now.getSeconds();
+function compareTime(hr, min, direction) {
 
-    if(m<10) m= '0'+m;
-    if(s<10) s= '0'+s;
-    return h + ':' + m + ':' + s;
+  var now = new Date();
+  nowhr = now.getHours();
+  nowmin = now.getMinutes();
+
+  if (direction == "lt") {
+    return (nowhr < hr) || ((nowhr == hr) && (nowmin < min));
+  } else if (direction == "gt") {
+    return (nowhr > hr) || ((nowhr == hr) && (nowmin > min));
+  }
+
 }
 
 function makeDate() {
@@ -60,77 +63,71 @@ app.post('/tmd_slack_notification', function(req, res) {
 
   if (req.body.verification == info.verification_email) {
 
-    if(timenow() > '05:55:00' && timenow() < '18:05:00'){
+    if (compareTime(05, 55, "gt") && compareTime(18, 05, "lt")) {
 
-    var message = {
-      unfurl_links: true,
-      channel: slack_channel,
-      token: info.token,
-      "attachments": [
-        {
-          "text": "RPI Ambulance dispatched at " + makeDate(),
-          "fallback": req.body.dispatch,
-          "callback_id": "responding",
-          "color": "#F35A00",
-          "attachment_type": "default",
-          "fields": [
-            {
-              "title": req.body.dispatch,
-              "value": "Are you responding?",
-              "short": true
-            }
-          ],
-          "actions": [
-            {
-              "name": "status",
-              "text": "Yes",
-              "style": "danger",
-              "type": "button",
-              "value": "yes"
-            },
-            {
-              "name": "status",
-              "text": "No",
-              "type": "button",
-              "value": "no"
-            }
-          ]
-        }
-      ]
-    };
-  }
+      var message = {
+        unfurl_links: true,
+        channel: slack_channel,
+        token: info.token,
+        "attachments": [
+          {
+            "text": "RPI Ambulance dispatched at " + makeDate(),
+            "fallback": req.body.dispatch,
+            "callback_id": "responding",
+            "color": "#F35A00",
+            "attachment_type": "default",
+            "fields": [
+              {
+                "title": req.body.dispatch,
+                "value": "Are you responding?",
+                "short": true
+              }
+            ],
+            "actions": [
+              {
+                "name": "status",
+                "text": "Yes",
+                "style": "danger",
+                "type": "button",
+                "value": "yes"
+              },
+              {
+                "name": "status",
+                "text": "No",
+                "type": "button",
+                "value": "no"
+              }
+            ]
+          }
+        ]
+      };
+    } else {
 
-  else{
-
-    var message = {
-      unfurl_links: true,
-      channel: slack_channel,
-      token: info.token,
-      "attachments": [
-        {
-          "text": "RPI Ambulance dispatched at " + makeDate(),
-          "fallback": req.body.dispatch,
-          "callback_id": "responding",
-          "color": "#F35A00",
-          "attachment_type": "default",
-          "fields": [
-            {
-              "title": req.body.dispatch,
-              "value": "Night crew call. No response in needed.",
-              "short": true
-            }
-          ]
-        }
-      ]
-    };
-
-  }
-
-
+      var message = {
+        unfurl_links: true,
+        channel: slack_channel,
+        token: info.token,
+        "attachments": [
+          {
+            "text": "RPI Ambulance dispatched at " + makeDate(),
+            "fallback": req.body.dispatch,
+            "callback_id": "responding",
+            "color": "#F35A00",
+            "attachment_type": "default",
+            "fields": [
+              {
+                "title": req.body.dispatch,
+                "value": "Night crew call. No response in needed.",
+                "short": true
+              }
+            ]
+          }
+        ]
+      };
+    }
     slack.send('chat.postMessage', message);
     res.status(200).send(req.body.dispatch);
-  }
-  else{
+  } else {
     res.status(401).send();
   }
 });
