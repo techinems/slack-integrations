@@ -117,7 +117,7 @@ app.post('/tmd_slack_notification', function(req, res) {
             "fields": [
               {
                 "title": req.body.dispatch,
-                "value": "Night crew call. No response in needed.",
+                "value": "Night crew call. No response is needed.",
                 "short": true
               }
             ]
