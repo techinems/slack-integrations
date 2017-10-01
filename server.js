@@ -142,8 +142,9 @@ app.post("/slack_response", function(req, res) {
   var messageTime = new Date(strReq.message_ts * 1000);
   var actionTime = new Date(strReq.action_ts * 1000);
 
+  userID = strReq.user.id;
+
   if ((actionTime - messageTime) < maxElapsedTime) {
-    userID = strReq.user.id;
 
     request.post({url:'https://slack.com/api/users.info', form: {token:info.token,user:userID}}, function(error, response, body){
       var userinfo = response.body.toString();
