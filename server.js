@@ -8,7 +8,8 @@ var parser = require('xml2json');
 const bodyParser = require('body-parser');
 
 // var slack_channel = 'C71B0PRDW'; //#development_scratch
-var slack_channel = 'G6XGMATUP'; //#responding
+var slack_channel = 'G6XGMATUP'; //#responding]
+var tmd_channel = 'C34SJ2E2X';//#tmd
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -127,9 +128,36 @@ app.post('/tmd_slack_notification', function(req, res) {
     }
     slack.send('chat.postMessage', message);
     res.status(200).send(req.body.dispatch);
-  } else {
-    res.status(401).send();
+  if (compareTime(05, 55, "gt") && compareTime(18, 05, "lt")) {
+
+    var message = {
+      unfurl_links: true,
+      channel: tmd_channel,
+      token: info.token,
+      "attachments": [
+        {
+          "text": "RPI Ambulance dispatched at " + makeDate(),
+          "fallback": req.body.dispatch,
+          "callback_id": "responding",
+          "color": "#F35A00",
+          "attachment_type": "default",
+          "fields": [
+            {
+              "title": req.body.dispatch,
+              "value": "Get to the garage ASAP. You may be able to respond.",
+              "short": true
+            }
+          ]
+        }
+      ]
+    };
   }
+  }
+  slack.send('chat.postMessage', message);
+  res.status(200).send(req.body.dispatch);
+} else {
+  res.status(401).send();
+}
 });
 
 app.post("/slack_response", function(req, res) {
