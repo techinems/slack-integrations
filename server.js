@@ -152,7 +152,6 @@ app.post("/slack_response", function(req, res) {
 
       abbrname = userinfo.user.profile.first_name.charAt(0).toUpperCase() + ". " + userinfo.user.profile.last_name;
 
-      var usernameUppercase = strReq.user.name.charAt(0).toUpperCase() + strReq.user.name.slice(1);
       if (strReq.actions[0].value == "yes") {
         console.log(abbrname + " replied yes");
         var response_message = {
