@@ -71,7 +71,7 @@ app.post('/tmd_slack_notification', function(req, res) {
         token: info.token,
         "attachments": [
           {
-            "text": "RPI Ambulance dispatched at " + makeDate(),
+            "text": "RPI Ambulance dispatched on " + makeDate(),
             "fallback": req.body.dispatch,
             "callback_id": "responding",
             "color": "#F35A00",
@@ -109,7 +109,7 @@ app.post('/tmd_slack_notification', function(req, res) {
         token: info.token,
         "attachments": [
           {
-            "text": "RPI Ambulance dispatched at " + makeDate(),
+            "text": "RPI Ambulance dispatched on " + makeDate(),
             "fallback": req.body.dispatch,
             "callback_id": "responding",
             "color": "#F35A00",
@@ -125,6 +125,38 @@ app.post('/tmd_slack_notification', function(req, res) {
         ]
       };
     }
+    slack.send('chat.postMessage', message);
+    res.status(200).send(req.body.dispatch);
+  } else {
+    res.status(401).send();
+  }
+});
+
+app.post('/tmd_slack_notification_long', function(req, res) {
+
+  if (req.body.verification == info.verification_email) {
+
+    var message = {
+      unfurl_links: true,
+      channel: slack_channel,
+      token: info.token,
+      "attachments": [
+        {
+          "text": "Rensslaer County longtone on " + makeDate(),
+          "fallback": req.body.dispatch,
+          "callback_id": "responding",
+          "color": "#F35A00",
+          "attachment_type": "default",
+          "fields": [
+            {
+              "title": req.body.dispatch,
+              "value": "",
+              "short": true
+            }
+          ]
+        }
+      ]
+    };
     slack.send('chat.postMessage', message);
     res.status(200).send(req.body.dispatch);
   } else {
