@@ -23,10 +23,88 @@ app.use('/slack', slack({
 }));
 
 app.post('/whoson', function(req, res) {
-  request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token, function(error, response, body) {
-    res.status(200).send(body);
-  });
+  if (req.body.text == "") {
+    request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token, function(error, response, body) {
+      res.status(200).send(body);
+    });
+  } else {
+    var d = new Date();
+    switch (req.body.text.toLowerCase()) {
+      case "yesteday":
+        d.setDate(d.getDate() - 1);
+        var date = makeWhosonDate(d);
+        break;
+
+      case "sunday":
+        d.setDate(d.getDate() + (7 - d.getDate()));
+        var date = makeWhosonDate(d);
+        break;
+
+      case "monday":
+        if (d.getDate() < 1) {
+          d.setDate(d.getDate() + (1 - d.getDate()));
+        } else {
+          d.setDate(d.getDate() + (7 - (d.getDate() - 1)));
+        }
+        var date = makeWhosonDate(d);
+        break;
+
+      case "tuesday":
+        if (d.getDate() < 2) {
+          d.setDate(d.getDate() + (2 - d.getDate()));
+        } else {
+          d.setDate(d.getDate() + (7 - (d.getDate() - 2)));
+        }
+        var date = makeWhosonDate(d);
+        break;
+
+      case "wednesday":
+        if (d.getDate() < 3) {
+          d.setDate(d.getDate() + (3 - d.getDate()));
+        } else {
+          d.setDate(d.getDate() + (7 - (d.getDate() - 3)));
+        }
+        var date = makeWhosonDate(d);
+        break;
+
+      case "thursday":
+        if (d.getDate() < 4) {
+          d.setDate(d.getDate() + (4 - d.getDate()));
+        } else {
+          d.setDate(d.getDate() + (7 - (d.getDate() - 4)));
+        }
+        var date = makeWhosonDate(d);
+        break;
+
+      case "friday":
+        if (d.getDate() < 5) {
+          d.setDate(d.getDate() + (5 - d.getDate()));
+        } else {
+          d.setDate(d.getDate() + (7 - (d.getDate() - 5)));
+        }
+        var date = makeWhosonDate(d);
+        break;
+
+      case "saturday":
+        d.setDate(d.getDate() + (6 - d.getDate()));
+        var date = makeWhosonDate(d);
+        break;
+    }
+
+    request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token + "&date=" + date, function(error, response, body) {
+      res.status(200).send(body);
+    });
+  }
 });
+
+function makeWhosonDate(date) {
+  var year = date.getFullYear();
+  var month = date.getMonth();
+  month = (month < 10) ? "0" + month : month;
+  var day = date.getDate();
+  day = (day < 10) ? "0" + day : day;
+  return year + "-" + month + "-" + day;
+}
 
 function compareTime(hr, min, direction) {
 
