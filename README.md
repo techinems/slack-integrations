@@ -13,12 +13,19 @@ Here's how a dispatch looks in Slack—with a few people who responded to the ca
 ---
 
 ## `/whoson` slash command
-This integration provides the RPI Ambulance crew schedule for:
+With no parameters passed to it, this integration provides the RPI Ambulance crew schedule for:
 * The current crew, between 1800 and 0600 hours
 * The previous night's crew and tonight's crew, between 0600 and 0900 hours
 * Tonight's crew, between 0900 and 1800 hours
 
 These differences provide a logical and grammatically accurate description of the status of night crews. The time between 0600 and 0900 hours was specifically selected because the previous night's crew will often still respond to emergency calls—even after their "shift" ended.
+
+When adding a parameter, one can receive the scheduled crew for any day from the previous day to one week in the future. For example:
+* `/whoson yesterday`
+* `/whoson monday`
+* `/whoson thursday`
+
+Capitalization does not matter for the parameters, but one must currently type the entire day of the week, spelled correctly.
 
 ___
 
