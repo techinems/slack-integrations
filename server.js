@@ -29,65 +29,72 @@ app.post('/whoson', function(req, res) {
     });
   } else {
     var d = new Date();
+    var o = new Date();
+
     switch (req.body.text.toLowerCase()) {
       case "yesteday":
-        d.setDate(d.getDate() - 1);
-        var date = makeWhosonDate(d);
+        o.setDate(d.getDate() - 1);
+        var date = makeWhosonDate(o);
+        break;
+
+      case "tomorrow":
+        o.setDate(d.getDate() + 1)
+        var date = makeWhosonDate(o);
         break;
 
       case "sunday":
-        d.setDate(d.getDate() + (7 - d.getDate()));
-        var date = makeWhosonDate(d);
+        o.setDate(d.getDate() + (7 - d.getDay()));
+        var date = makeWhosonDate(o);
         break;
 
       case "monday":
-        if (d.getDate() < 1) {
-          d.setDate(d.getDate() + (1 - d.getDate()));
+        if (d.getDay() < 1) {
+          o.setDate(d.getDate() + (1 - d.getDay()));
         } else {
-          d.setDate(d.getDate() + (7 - (d.getDate() - 1)));
+          o.setDate(d.getDate() + (7 - (d.getDay() - 1)));
         }
-        var date = makeWhosonDate(d);
+        var date = makeWhosonDate(o);
         break;
 
       case "tuesday":
-        if (d.getDate() < 2) {
-          d.setDate(d.getDate() + (2 - d.getDate()));
+        if (d.getDay() < 2) {
+          o.setDate(d.getDate() + (2 - d.getDay()));
         } else {
-          d.setDate(d.getDate() + (7 - (d.getDate() - 2)));
+          o.setDate(d.getDate() + (7 - (d.getDay() - 2)));
         }
-        var date = makeWhosonDate(d);
+        var date = makeWhosonDate(o);
         break;
 
       case "wednesday":
-        if (d.getDate() < 3) {
-          d.setDate(d.getDate() + (3 - d.getDate()));
+        if (d.getDay() < 3) {
+          o.setDate(d.getDate() + (3 - d.getDay()));
         } else {
-          d.setDate(d.getDate() + (7 - (d.getDate() - 3)));
+          o.setDate(d.getDate() + (7 - (d.getDay() - 3)));
         }
-        var date = makeWhosonDate(d);
+        var date = makeWhosonDate(o);
         break;
 
       case "thursday":
-        if (d.getDate() < 4) {
-          d.setDate(d.getDate() + (4 - d.getDate()));
+        if (d.getDay() < 4) {
+          o.setDate(d.getDate() + (4 - d.getDay()));
         } else {
-          d.setDate(d.getDate() + (7 - (d.getDate() - 4)));
+          o.setDate(d.getDate() + (7 - (d.getDay() - 4)));
         }
-        var date = makeWhosonDate(d);
+        var date = makeWhosonDate(o);
         break;
 
       case "friday":
-        if (d.getDate() < 5) {
-          d.setDate(d.getDate() + (5 - d.getDate()));
+        if (d.getDay() < 5) {
+          o.setDate(d.getDate() + (5 - d.getDay()));
         } else {
-          d.setDate(d.getDate() + (7 - (d.getDate() - 5)));
+          o.setDate(d.getDate() + (7 - (d.getDay() - 5)));
         }
-        var date = makeWhosonDate(d);
+        var date = makeWhosonDate(o);
         break;
 
       case "saturday":
-        d.setDate(d.getDate() + (6 - d.getDate()));
-        var date = makeWhosonDate(d);
+        o.setDate(d.getDate() + (6 - d.getDay()));
+        var date = makeWhosonDate(o);
         break;
     }
 
@@ -99,7 +106,7 @@ app.post('/whoson', function(req, res) {
 
 function makeWhosonDate(date) {
   var year = date.getFullYear();
-  var month = date.getMonth();
+  var month = date.getMonth() + 1;
   month = (month < 10) ? "0" + month : month;
   var day = date.getDate();
   day = (day < 10) ? "0" + day : day;
