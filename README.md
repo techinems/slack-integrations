@@ -3,7 +3,7 @@ There are a number of integrations included in this Node.js file, intended to ea
 
 ## AmIResponding?
 
-This integration was the origin on this entire project. AIR provides [IamResponding](https://iamresponding.com/v3/Pages/Default.aspx)-type functionality for free and within a Slack team. It utilizes Slack's [bot users API](https://api.slack.com/bot-users) to post an [interactive message](https://api.slack.com/interactive-messages) when a call is dispatched.
+This integration was the origin of this entire project. AIR provides [IamResponding](https://iamresponding.com/v3/Pages/Default.aspx)-type functionality for free and within a Slack team. It utilizes Slack's [bot users API](https://api.slack.com/bot-users) to post an [interactive message](https://api.slack.com/interactive-messages) when a call is dispatched.
 
 This interactive message posts some information about the call and queries channel members if they're responding or not. It then posts each person's response for the channel to see.
 
