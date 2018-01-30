@@ -34,7 +34,7 @@ app.post('/whoson', function(req, res) {
     switch (req.body.text.toLowerCase()) {
       case "yesterday":
         o.setDate(d.getDate() - 1);
-        var date = makeWhosonDate(o);
+        var date = makeWhosonDate(o) + "$yesterday=1";
         break;
 
       case "tomorrow":
