@@ -39,7 +39,7 @@ app.post('/whoson', function(req, res) {
 
       case "tomorrow":
         o.setDate(d.getDate() + 1)
-        var date = makeWhosonDate(o);
+        var date = makeWhosonDate(o) + "&tomorrow=1";
         break;
 
       case "sunday":
