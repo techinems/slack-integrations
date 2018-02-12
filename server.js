@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
-var http = require('http')
+var http = require('http');
 var info = require('./var.js');
-var request = require('request')
+var request = require('request');
 var slack = require('express-slack');
 var parser = require('xml2json');
 const bodyParser = require('body-parser');
@@ -23,7 +23,8 @@ app.use('/slack', slack({
 }));
 
 app.post('/whoson', function(req, res) {
-  if (req.body.text == "") {
+  var done = false;
+  if (req.body.text === "") {
     request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token, function(error, response, body) {
       res.status(200).send(body);
     });
@@ -32,21 +33,25 @@ app.post('/whoson', function(req, res) {
     var o = new Date();
 
     switch (req.body.text.toLowerCase()) {
+      case "yest":
       case "yesterday":
         o.setDate(d.getDate() - 1);
         var date = makeWhosonDate(o) + "&yesterday=1";
         break;
 
+      case "tom":
       case "tomorrow":
-        o.setDate(d.getDate() + 1)
+        o.setDate(d.getDate() + 1);
         var date = makeWhosonDate(o) + "&tomorrow=1";
         break;
 
+      case "sun":
       case "sunday":
         o.setDate(d.getDate() + (7 - d.getDay()));
         var date = makeWhosonDate(o);
         break;
 
+      case "mon":
       case "monday":
         if (d.getDay() < 1) {
           o.setDate(d.getDate() + (1 - d.getDay()));
@@ -56,6 +61,7 @@ app.post('/whoson', function(req, res) {
         var date = makeWhosonDate(o);
         break;
 
+      case "tues":
       case "tuesday":
         if (d.getDay() < 2) {
           o.setDate(d.getDate() + (2 - d.getDay()));
@@ -65,6 +71,7 @@ app.post('/whoson', function(req, res) {
         var date = makeWhosonDate(o);
         break;
 
+      case "wed":
       case "wednesday":
         if (d.getDay() < 3) {
           o.setDate(d.getDate() + (3 - d.getDay()));
@@ -74,6 +81,7 @@ app.post('/whoson', function(req, res) {
         var date = makeWhosonDate(o);
         break;
 
+      case "thurs":
       case "thursday":
         if (d.getDay() < 4) {
           o.setDate(d.getDate() + (4 - d.getDay()));
@@ -83,6 +91,7 @@ app.post('/whoson', function(req, res) {
         var date = makeWhosonDate(o);
         break;
 
+      case "fri":
       case "friday":
         if (d.getDay() < 5) {
           o.setDate(d.getDate() + (5 - d.getDay()));
@@ -92,15 +101,22 @@ app.post('/whoson', function(req, res) {
         var date = makeWhosonDate(o);
         break;
 
+      case "sat":
       case "saturday":
         o.setDate(d.getDate() + (6 - d.getDay()));
         var date = makeWhosonDate(o);
         break;
+
+      default:
+        res.status(200).send("Please enter a valid day parameter and try again.");
+        done = true;
     }
 
-    request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token + "&date=" + date, function(error, response, body) {
-      res.status(200).send(body);
-    });
+    if (!done) {
+      request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token + "&date=" + date, function(error, response, body) {
+        res.status(200).send(body);
+      });
+    }
   }
 });
 
@@ -149,8 +165,8 @@ app.post('/tmd_slack_notification', function(req, res) {
   if (req.body.verification == info.verification_email) {
 
     if (compareTime(05, 55, "gt") && compareTime(18, 05, "lt")) {
-
-      var message = {
+      var message = "";
+      message = {
         unfurl_links: true,
         channel: slack_channel,
         token: info.token,
@@ -187,8 +203,7 @@ app.post('/tmd_slack_notification', function(req, res) {
         ]
       };
     } else {
-
-      var message = {
+      message = {
         unfurl_links: true,
         channel: slack_channel,
         token: info.token,
@@ -254,7 +269,7 @@ app.post("/slack_response", function(req, res) {
   var strReq = JSON.parse(strReq);
 
   var maxElapsedTime = 12; //minutes to allow responses
-  maxElapsedTime *= 60 * 1000
+  maxElapsedTime *= 60 * 1000;
 
   var messageTime = new Date(strReq.message_ts * 1000);
   var actionTime = new Date(strReq.action_ts * 1000);
@@ -268,10 +283,10 @@ app.post("/slack_response", function(req, res) {
       var userinfo = JSON.parse(userinfo);
 
       abbrname = userinfo.user.profile.first_name.charAt(0).toUpperCase() + ". " + userinfo.user.profile.last_name;
-
+      var response_message = "";
       if (strReq.actions[0].value == "yes") {
         console.log(abbrname + " replied yes");
-        var response_message = {
+        response_message = {
           unfurl_links: true,
           channel: slack_channel,
           token: info.token,
@@ -284,10 +299,10 @@ app.post("/slack_response", function(req, res) {
               "mrkdwn_in": ["text"]
             }
           ]
-        }
+        };
       } else {
         console.log(abbrname + " replied no");
-        var response_message = {
+        response_message = {
           unfurl_links: true,
           channel: slack_channel,
           token: info.token,
@@ -298,7 +313,7 @@ app.post("/slack_response", function(req, res) {
               "text": abbrname + " is NOT RESPONDING"
             }
           ]
-        }
+        };
       }
       res.status(200).send();
       slack.send('chat.postMessage', response_message);
@@ -311,9 +326,9 @@ app.post("/slack_response", function(req, res) {
       user: userID,
       as_user: true,
       text: "Sorry, your response was logged too long after the dispatch went out."
-    }
+    };
     res.status(200).send();
-    slack.send('chat.postEphemeral', response_message)
+    slack.send('chat.postEphemeral', response_message);
   }
 
 });
@@ -334,8 +349,8 @@ function rpialert() {
     if (json.rss.channel.item) {
       var item = json.rss.channel.item;
       var title = item.title;
-      text = item.description
-      var link = item.link
+      text = item.description;
+      var link = item.link;
 
       if (oldtext != text) {
         var message =  {
@@ -352,7 +367,7 @@ function rpialert() {
               "color": "#f00"
             }
           ]
-        }
+        };
         oldtext = text;
       }
 
@@ -361,4 +376,4 @@ function rpialert() {
   });
 }
 
-setInterval(function() {rpialert()}, 10000);
+setInterval(function() {rpialert();}, 10000);
