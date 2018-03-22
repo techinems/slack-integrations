@@ -22,17 +22,18 @@ These differences provide a logical and grammatically accurate description of th
 
 When adding a parameter, one can receive the scheduled crew for any day from the previous day to one week in the future. For example:
 * `/whoson yesterday`
-* `/whoson monday`
-* `/whoson thursday`
+* `/whoson mon`
+* `/whoson Thursday`
+* `/whoson SAT`
 
-Capitalization does not matter for the parameters, but one must currently type the entire day of the week, spelled correctly.
+Capitalization does not matter for the parameters, but one must currently type the entire day of the week (or its common abbreviation), spelled correctly.
 
 ___
 
 ## RPI*Alert*
 The RPI*Alert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems have been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilize RPI*Alert*'s public RSS feed.
 
-This Slack integration uses the RSS feed, as well, and forwards the alert to everybody on the #alerts channel, a specific channel intended to never be muted.
+This Slack integration uses the RSS feed, as well, and forwards the alert to everybody on the #alerts channel, a channel specifically intended to never be muted.
 
 For good measure, here's how an alert looks in the channel:  
 <img src="https://i.imgur.com/9PKjtbU.png" width="500">
