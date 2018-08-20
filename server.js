@@ -396,40 +396,40 @@ app.use(express.static('.'));
 text = "";
 oldtext = "";
 
-var rpialertvar = require("//alert.rpi.edu/alerts.js");
-
-function rpialert() {
-  request("http://alert.rpi.edu/data/alert/alerts.xml", function(error, response, body) {
-    var json = JSON.parse(parser.toJson(body));
-
-    if (json.rss.channel.item) {
-      var item = json.rss.channel.item;
-      var title = item.title;
-      text = item.description;
-      var link = item.link;
-
-      if (oldtext != text) {
-        var message =  {
-          unfurl_links: false,
-          channel: dispatch_channel,
-          token: info.token,
-          "text": "RPI ALERT - <!channel>",
-          "fallback": "RPI ALERT: " + text,
-          "attachments": [
-            {
-              "fallback": "RPI ALERT: " + text,
-              "title": title,
-              "text": text + "\nGet more info at " + link,
-              "color": "#f00"
-            }
-          ]
-        };
-        oldtext = text;
-      }
-
-      slack.send('chat.postMessage', message);
-    }
-  });
-}
-
-setInterval(function() {rpialert();}, 10000);
+// var rpialertvar = require("//alert.rpi.edu/alerts.js");
+//
+// function rpialert() {
+//   request("http://alert.rpi.edu/data/alert/alerts.xml", function(error, response, body) {
+//     var json = JSON.parse(parser.toJson(body));
+//
+//     if (json.rss.channel.item) {
+//       var item = json.rss.channel.item;
+//       var title = item.title;
+//       text = item.description;
+//       var link = item.link;
+//
+//       if (oldtext != text) {
+//         var message =  {
+//           unfurl_links: false,
+//           channel: dispatch_channel,
+//           token: info.token,
+//           "text": "RPI ALERT - <!channel>",
+//           "fallback": "RPI ALERT: " + text,
+//           "attachments": [
+//             {
+//               "fallback": "RPI ALERT: " + text,
+//               "title": title,
+//               "text": text + "\nGet more info at " + link,
+//               "color": "#f00"
+//             }
+//           ]
+//         };
+//         oldtext = text;
+//       }
+//
+//       slack.send('chat.postMessage', message);
+//     }
+//   });
+// }
+//
+// setInterval(function() {rpialert();}, 10000);
