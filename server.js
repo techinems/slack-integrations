@@ -206,7 +206,7 @@ app.post('/tmd_slack_notification', function(req, res) {
           }
         ]
       };
-      var dispatch_message =  {
+      dispatch_message =  {
         unfurl_links: false,
         channel: dispatch_channel,
         token: info.token,
@@ -241,7 +241,7 @@ app.post('/tmd_slack_notification', function(req, res) {
           }
         ]
       };
-      var dispatch_message =  {
+      dispatch_message =  {
         unfurl_links: false,
         channel: dispatch_channel,
         token: info.token,
@@ -249,9 +249,18 @@ app.post('/tmd_slack_notification', function(req, res) {
         "fallback": req.body.dispatch,
         "attachments": [
           {
-            "title": req.body.dispatch,
-            "value": "Night crew call. No response is needed.",
-            "short": true
+            "text": "RPI Ambulance dispatched on " + makeDate(),
+            "fallback": req.body.dispatch,
+            "callback_id": "responding",
+            "color": "#F35A00",
+            "attachment_type": "default",
+            "fields": [
+              {
+                "title": req.body.dispatch,
+                "value": "Night crew call. No response is needed.",
+                "short": true
+              }
+            ]
           }
         ]
       };
