@@ -26,7 +26,7 @@ app.use('/slack', slack({
 
 app.post('/whoson', function(req, res) {
   var done = false;
-  if (req.body.text === "") {
+  if (req.body.text === "" || req.body.text.toLowerCase() === "today") {
     request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token, function(error, response, body) {
       res.status(200).send(body);
     });
@@ -35,12 +35,6 @@ app.post('/whoson', function(req, res) {
     var o = new Date();
 
     switch (req.body.text.toLowerCase()) {
-      case "tom":
-      case "tomorrow":
-      o.setDate(d.getDate());
-      var date = makeWhosonDate(o) + "&today=1";
-      break;    
-        
       case "yest":
       case "yesterday":
       o.setDate(d.getDate() - 1);
