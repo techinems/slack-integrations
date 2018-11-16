@@ -400,7 +400,7 @@ app.listen(5939, function () {
   console.log('Server up');
 });
 
-app.use(express.static('.'));
+//app.use(express.static('.'));
 
 text = "";
 oldtext = "";
