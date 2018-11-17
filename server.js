@@ -6,11 +6,16 @@ var request = require('request');
 var slack = require('express-slack');
 var parser = require('xml2json');
 const bodyParser = require('body-parser');
+const curl = new (require( 'curl-request' ))();
 
-// var air_channel = 'C71B0PRDW'; //#development_scratch
+
 var air_channel = 'G6XGMATUP'; //#responding
 var dispatch_channel = 'GAG3D0EBF'; //#dispatch
 var rpialert_channel = 'C6WT63HM3';
+
+// var air_channel = 'C71B0PRDW'; //#development_scratch
+// var rpialert_channel = 'C71B0PRDW'; //#development_scratch
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -405,40 +410,45 @@ app.listen(5939, function () {
 text = "";
 oldtext = "";
 
-// var rpialertvar = require("//alert.rpi.edu/alerts.js");
-//
-// function rpialert() {
-//   request("http://alert.rpi.edu/data/alert/alerts.xml", function(error, response, body) {
-//     var json = JSON.parse(parser.toJson(body));
-//
-//     if (json.rss.channel.item) {
-//       var item = json.rss.channel.item;
-//       var title = item.title;
-//       text = item.description;
-//       var link = item.link;
-//
-//       if (oldtext != text) {
-//         var message =  {
-//           unfurl_links: false,
-//           channel: dispatch_channel,
-//           token: info.token,
-//           "text": "RPI ALERT - <!channel>",
-//           "fallback": "RPI ALERT: " + text,
-//           "attachments": [
-//             {
-//               "fallback": "RPI ALERT: " + text,
-//               "title": title,
-//               "text": text + "\nGet more info at " + link,
-//               "color": "#f00"
-//             }
-//           ]
-//         };
-//         oldtext = text;
-//       }
-//
-//       slack.send('chat.postMessage', message);
-//     }
-//   });
-// }
-//
-// setInterval(function() {rpialert();}, 10000);
+function parseAlertData(row) {
+  return row.substring(17, row.length-2);
+}
+
+function rpialert() {
+
+  curl.setHeaders(['user-agent: nodejs'])
+  .get('http://alert.rpi.edu/alerts.js')
+  .then(({statusCode, body, headers}) => {
+    var [item1, item2] = body.split('\n').map(row => parseAlertData(row));
+
+    text = item1;
+
+    if (text != oldtext && text != "") {
+      var message =  {
+        unfurl_links: false,
+        channel: rpialert_channel,
+        token: info.token,
+        "username": "RPI AlertBot",
+        "text": "RPI ALERT - <!channel>",
+        "fallback": "RPI ALERT: " + text,
+        "attachments": [
+          {
+            "text": text,
+            "color": "#f00",
+            "footer": "More info: http://alert.rpi.edu",
+            "footer_icon": "https://emoji.slack-edge.com/T351C3UGL/rpi/a494ab4a33755c38.png"
+          }
+        ]
+      };
+      oldtext = text;
+    }
+
+    slack.send('chat.postMessage', message);
+  })
+  .catch((e) => {
+    console.log(e);
+    return;
+  });
+}
+
+setInterval(function() {rpialert();}, 10000);
