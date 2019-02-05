@@ -20,7 +20,7 @@
   "dependencies": {
     "curl-request": "^1.1.1",
     "express-slack": "^1.0.11",
-    "request": "^2.81.0",
-    "xml2json": "^0.11.0"
+    "request": "^2.88.0",
+    "xml2json": "^0.11.2"
   }
 }
