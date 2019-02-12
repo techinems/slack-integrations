@@ -38,7 +38,7 @@ app.post('/whoson', function(req, res) {
   } else if (req.body.text.toLowerCase() === "week") {
     request("https://rpiambulance.com/slack-whoson.php?token=" + info.slash_command_token + "&week=1", function(error, response, body) {
       res.status(200).send(body);
-    }
+    });
   } else {
     var d = new Date();
     var o = new Date();
