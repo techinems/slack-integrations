@@ -421,7 +421,7 @@ function parseAlertData(row) {
 function rpialert() {
 
   curl.setHeaders(['user-agent: nodejs'])
-  .get('http://alert.rpi.edu/alerts.js')
+  .get('https://alert.rpi.edu/alerts.js')
   .then(({statusCode, body, headers}) => {
     var [item1, item2] = body.split('\n').map(row => parseAlertData(row));
 
