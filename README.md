@@ -18,7 +18,7 @@ With no parameters passed to it, this integration provides the RPI Ambulance cre
 * The previous night's crew and tonight's crew, between 0600 and 0900 hours
 * Tonight's crew, between 0900 and 1800 hours
 
-These differences provide a logical and grammatically accurate description of the status of night crews. The time between 0600 and 0900 hours was specifically selected because the previous night's crew will often still respond to emergency calls—even after their "shift" ended.
+These differences provide a logical and semantically accurate description of the status of night crews. The time between 0600 and 0900 hours was specifically selected because the previous night's crew will often still respond to emergency calls—even after their "shift" ended.
 
 When adding a parameter, one can receive the scheduled crew for any day from the previous day to one week in the future. For example:
 * `/whoson yesterday`
@@ -26,14 +26,16 @@ When adding a parameter, one can receive the scheduled crew for any day from the
 * `/whoson Thursday`
 * `/whoson SAT`
 
-Capitalization does not matter for the parameters, but one must currently type the entire day of the week (or its common abbreviation), spelled correctly.
+A more recent feature is the ability to get a week's worth of crews starting on the current day with `/whoson week`. 
+
+Capitalization does not matter for the parameters, but one must type the entire day of the week (or its common abbreviation), spelled correctly.
 
 ___
 
 ## RPI*Alert*
-The RPI*Alert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems have been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilize RPI*Alert*'s public RSS feed.
+The RPI*Alert* system provides audible, SMS, and email notifications to the RPI campus during high-priority, critical, rapidly changing events. Several systems had been set up to work with RPI*Alert*, including [Concerto Emergency](https://github.com/concerto-addons/concerto_emergency), most of which utilized RPI*Alert*'s deprecated public RSS feed.
 
-This Slack integration uses the RSS feed, as well, and forwards the alert to everybody on the #alerts channel, a channel specifically intended to never be muted.
+This Slack integration cURLs a JavaScript file from RPI containing an `alert_content` variable, and then it forwards the alert to everybody on the #alerts channel, a channel specifically intended to never be muted.
 
 For good measure, here's how an alert looks in the channel:  
 <img src="https://i.imgur.com/9PKjtbU.png" width="500">
