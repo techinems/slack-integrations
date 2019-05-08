@@ -414,18 +414,22 @@ app.listen(5939, function () {
 text = "";
 oldtext = "";
 
-function parseAlertData(row) {
-  return row.substring(17, row.length-2);
-}
+const parseAlertData = body => {
+  console.log(body.indexOf("alert_content = "));
+  return body.substring(
+    body.indexOf("alert_content = ") + 17,
+    body.indexOf("alert_default = ") - 4
+  );
+};
 
 function rpialert() {
 
   curl.setHeaders(['user-agent: nodejs'])
   .get('https://alert.rpi.edu/alerts.js')
   .then(({statusCode, body, headers}) => {
-    var [item1, item2] = body.split('\n').map(row => parseAlertData(row));
+    const alert = parseAlertData(body);
 
-    text = item1;
+    text = alert;
 
     if (text != oldtext && text != "") {
       var message =  {
